@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="pl"> 
+
+<head>
+<meta charset="utf-8"/>
+   <title>Najlepsze filmy!</title>
+		<meta name="description" content="Przed Tobą spis moich ulubionych filmów. Sprawdź, czy znasz je wszystkie. Uczta dla kinomaniaka!"/>
+		<meta name"keywords" content="film, kino, najlepsze filmy, top filmy"/>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+</head>
+
+<body>
+  <h1>FU!K LIVE #YOO</h1>
+ MooMoo:    <br />  <a href="http://moomoo.io/?server=40:17:0" target="_blank" title="To jest to">MooMoo-40:17:0</a>
+  
+  <br />  <br />
+  
+  <a href="https://www.filmweb.pl/film/Forrest+Gump-1994-998" target="_blank" title="XD"/><img src="PlanLekcji"/>
+  </a>
+	
+	  <br />  <br />
+	  
+		<iframe width="460" height="215" src="https://www.youtube.com/embed/Go3z4QqVaIQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		
+		<iframe width="460" height="215" src="https://www.youtube.com/embed/JTPHTQiNjaw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		
+		<iframe width="460" height="215" src="https://www.youtube.com/embed/wqZnO71PBis" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	
+</body>
+
+</html>
