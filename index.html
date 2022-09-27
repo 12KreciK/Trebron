@@ -17,6 +17,12 @@
 
         <button onclick="myFunction()">Nie masz psychy kliknąć</button>
         <button onclick="helpPromo()">Help Promo</button>
+
+        <h3>Password</h3>
+<input type="password" id="1password"><br><br>
+
+
+        <button onclick="javascript:return validatePass()">my code</button>
         <script>
             function myFunction() {
                 const myWindow = window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ", "", "width=1000,height=800");
@@ -25,8 +31,18 @@
             function helpPromo() {
                 const myWindow = window.open("https://rollercoin.com/?r=kzbg9cs6", "", "width=1000,height=800");
             
-            }
+            };
+            function validatePass(){
+    if(document.getElementById('1password').value == 'ok'){
+        document.getElementById('dick').style.display = "block";
+        return true;
+    }else{
+        alert('wrong password!!');
+        return false;
+    }}
             </script>
+
+            <iframe src="MY_hack.txt" style="width: 900px; height: 500px; display: none" id="dick"> </iframe>
 
     </body>
 </html>
